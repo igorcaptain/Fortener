@@ -1,13 +1,29 @@
-// Learn more about F# at http://docs.microsoft.com/dotnet/fsharp
+open Microsoft.AspNetCore.Builder
+open Microsoft.AspNetCore.Hosting
+open Microsoft.Extensions.DependencyInjection
+open Giraffe
+open Fortener.Http
+open Url.UrlInMemory
+open System.Collections
 
-open System
+let routes =
+    choose [
+        UrlHttp.handlers
+    ]
 
-// Define a function to construct a message to print
-let from whom =
-    sprintf "from %s" whom
+let configureApp (app : IApplicationBuilder) =
+    app.UseGiraffe routes
+
+let configureServices (services : IServiceCollection) =
+    services.AddGiraffe() |> ignore
+    services.AddUrlInMemory(Hashtable()) |> ignore
 
 [<EntryPoint>]
 let main argv =
-    let message = from "F#" // Call the function
-    printfn "Hello world %s" message
-    0 // return an integer exit code
+    WebHostBuilder()
+        .UseKestrel()
+        .Configure(configureApp)
+        .ConfigureServices(configureServices)
+        .Build()
+        .Run()
+    0

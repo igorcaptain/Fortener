@@ -5,10 +5,10 @@
     <WarnOn>3390;$(WarnOn)</WarnOn>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Url.fs" />
-    <Compile Include="UrlInMemory.fs" />
-    <Compile Include="UrlHttp.fs" />
-    <Compile Include="Program.fs" />
+    <Compile Include="src/Url.fs" />
+    <Compile Include="src/UrlInMemory.fs" />
+    <Compile Include="src/UrlHttp.fs" />
+    <Compile Include="src/Program.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Giraffe" Version="5.0.0" />

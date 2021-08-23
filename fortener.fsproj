@@ -7,6 +7,7 @@
   <ItemGroup>
     <Compile Include="src/Url.fs" />
     <Compile Include="src/UrlInMemory.fs" />
+    <Compile Include="src\UrlMongoDb.fs" />
     <Compile Include="src/UrlHttp.fs" />
     <Compile Include="src/Program.fs" />
   </ItemGroup>

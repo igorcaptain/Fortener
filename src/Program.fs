@@ -3,8 +3,10 @@ open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.DependencyInjection
 open Giraffe
 open Fortener.Http
-open Url.UrlInMemory
-open System.Collections
+open MongoDB.Driver
+open System
+open Url.UrlMongoDb
+open Fortener
 
 let routes =
     choose [
@@ -15,8 +17,10 @@ let configureApp (app : IApplicationBuilder) =
     app.UseGiraffe routes
 
 let configureServices (services : IServiceCollection) =
+    let mongo = MongoClient(Environment.GetEnvironmentVariable "MONGO_URL")
+    let db = mongo.GetDatabase "fortener"
     services.AddGiraffe() |> ignore
-    services.AddUrlInMemory(Hashtable()) |> ignore
+    services.AddUrlMongoDb(db.GetCollection<Url>("urls")) |> ignore
 
 [<EntryPoint>]
 let main argv =
